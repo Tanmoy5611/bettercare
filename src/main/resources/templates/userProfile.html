@@ -1,0 +1,162 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Profiles</title>
+
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3" th:text="#{userProfiles}">User Profiles</h1>
+        <button class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#createProfileModal"
+                th:text="#{newProfile}">
+            + New Profile
+        </button>
+    </div>
+
+    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+    <div class="row g-4">
+
+        <div class="col-md-6 col-lg-4" th:each="profile : ${profiles}">
+            <div class="card h-100 shadow-sm">
+
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${profile.name}">Alice</h5>
+
+                    <p class="card-text mb-1">
+                        <strong th:text="#{age}">Age:</strong>
+                        <span th:text="${profile.age}">30</span>
+                    </p>
+
+                    <p class="card-text mb-1">
+                        <strong th:text="#{skinColor}">Skin Color:</strong>
+                        <span th:text="${profile.skinColor}">LIGHT</span>
+                    </p>
+
+                    <p class="card-text">
+                        <strong th:text="#{maxEx}">Max Safe Sun Exposure:</strong>
+                        <span th:text="${profile.sunExposure}">Prediction</span> min
+                    </p>
+                </div>
+
+                <div class="card-footer bg-white text-end">
+                    <a th:href="@{/edit/{id}(id=${profile.profileId})}"
+                       class="btn btn-sm btn-outline-secondary me-1">
+                        Edit
+                    </a>
+
+                    <form th:action="@{/delete/{id}(id=${profile.profileId})}"
+                          method="post"
+                          th:onsubmit="return confirm('Delete this profile?')"
+                          style="display:inline">
+                        <button type="submit"
+                                class="btn btn-sm btn-danger"
+                                th:text="#{delete}">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-12" th:if="${#lists.isEmpty(profiles)}">
+            <div class="text-center py-5 text-muted" th:text="#{noProfiles}">
+                No profiles found.
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="createProfileModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <form th:action="@{/userProfile}" th:object="${profile}" method="post">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" th:text="#{createProfile}">Create Profile</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <label for="createName" class="form-label" th:text="#{name}">Name</label>
+                            <input id="createName" type="text"
+                                   th:field="*{name}"
+                                   class="form-control"
+                                   required/>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="createAge" class="form-label" th:text="#{age}">Age</label>
+                            <input id="createAge" type="number"
+                                   th:field="*{age}"
+                                   min="0"
+                                   class="form-control"/>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="createSkinColor" class="form-label" th:text="#{skinColor}">
+                                Skin Color
+                            </label>
+                            <select id="createSkinColor"
+                                    th:field="*{skinColor}"
+                                    class="form-select"
+                                    required>
+                                <option th:each="sc : ${skinColors}"
+                                        th:value="${sc}"
+                                        th:text="${sc}">
+                                </option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal"
+                                th:text="#{cancel}">
+                            Cancel
+                        </button>
+                        <button type="submit"
+                                class="btn btn-primary"
+                                th:text="#{create}">
+                            Create
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="text-center mt-5">
+    <a th:href="@{/}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i>
+        Back to Home
+    </a>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

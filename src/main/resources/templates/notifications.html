@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{notifications.title}">Your Notifications</title>
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{/css/notification.css}">
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</head>
+
+<body class="bg-dark text-light">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 th:text="#{notifications.title}">Your Notifications</h2>
+
+        <div class="d-flex gap-2">
+            <a th:href="@{/}"
+               class="btn btn-outline-light btn-sm back-home-btn">
+                <i class="bi bi-arrow-left"></i>
+                <span th:text="#{nav.backHome}">Back to Home</span>
+            </a>
+
+            <form th:action="@{/notifications/mark-all}" method="post">
+                <button class="btn btn-outline-info btn-sm" type="submit">
+                    <i class="bi bi-check2-all"></i>
+                    <span th:text="#{notifications.markAll}">Mark all as read</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card email-settings mb-4">
+        <div class="card-body">
+            <h5 class="mb-3">
+                <i class="bi bi-envelope-paper"></i>
+                <span th:text="#{email.settings.title}">Email Alert Settings</span>
+            </h5>
+
+            <form th:action="@{/update-alert-settings}" method="post">
+                <input type="hidden" name="_receiveAlerts" value="false">
+
+                <div class="form-check">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           name="receiveAlerts"
+                           value="true"
+                           id="receiveAlerts"
+                           th:checked="${user.receiveEmailAlerts}">
+
+                    <label class="form-check-label" for="receiveAlerts"
+                           th:text="#{email.settings.receive}">
+                        Receive Email Alerts
+                    </label>
+                </div>
+
+                <button class="btn btn-primary btn-sm mt-3" type="submit"
+                        th:text="#{email.settings.save}">
+                    Save Changes
+                </button>
+            </form>
+
+            <span th:if="${user.receiveEmailAlerts}" class="badge bg-success mt-2"
+                  th:text="#{email.settings.on}">
+                Email Alerts: ON
+            </span>
+
+            <span th:unless="${user.receiveEmailAlerts}" class="badge bg-secondary mt-2"
+                  th:text="#{email.settings.off}">
+                Email Alerts: OFF
+            </span>
+        </div>
+    </div>
+
+    <div th:each="n : ${alerts}"
+         class="notification-card"
+         th:classappend="
+            ${n.level.name() == 'INFO'} ? 'notification-info' :
+            (${n.level.name() == 'WARNING'} ? 'notification-warning' :
+            'notification-danger')
+         ">
+
+        <div class="notification-icon">
+            <i th:class="
+                ${n.level.name() == 'INFO'} ? 'bi bi-info-circle-fill' :
+                (${n.level.name() == 'WARNING'} ? 'bi bi-exclamation-triangle-fill' :
+                'bi bi-exclamation-octagon-fill')
+            "></i>
+        </div>
+
+        <div class="notification-content">
+            <strong th:switch="${n.level.name()}">
+                <span th:case="'INFO'" th:text="#{notification.level.INFO}">INFO</span>
+                <span th:case="'WARNING'" th:text="#{notification.level.WARNING}">WARNING</span>
+                <span th:case="'DANGER'" th:text="#{notification.level.DANGER}">DANGER</span>
+                <span th:case="*" th:text="${n.level}">INFO</span>
+            </strong>
+            :
+            <span th:text="${n.message}">Alert message</span>
+
+            <div class="notification-date"
+                 th:text="${#temporals.format(n.createdAt, 'yyyy-MM-dd HH:mm')}">
+            </div>
+
+            <form th:if="${!n.seen}"
+                  th:action="@{'/notifications/seen/' + ${n.notificationId}}"
+                  method="post">
+                <button class="btn btn-sm btn-outline-light mt-2" type="submit">
+                    <i class="bi bi-check2"></i>
+                    <span th:text="#{notifications.markOne}">Mark as read</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>

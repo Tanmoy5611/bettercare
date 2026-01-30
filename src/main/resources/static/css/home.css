@@ -1,0 +1,28 @@
+/* Page-specific styles for home.html */
+
+.hero {
+    padding: 120px 0 100px;
+}
+
+
+.alert-banner {
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 18px;
+}
+
+
+.reading-card {
+    border-radius: 22px;
+    padding: 30px;
+}
+
+
+.feature-card {
+    border-radius: 22px;
+}
+
+.chart-wrapper {
+    border-radius: 22px;
+}
