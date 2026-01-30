@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark" th:fragment="navbar">
+
+    <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
+            <img th:src="@{/images/bettercare-logo.png}"
+                 alt="BetterCare logo"
+                 class="bettercare-logo me-2">
+
+            <span class="bettercare-text">BetterCare</span>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}" th:text="#{home}">Home</a>
+                </li>
+
+                <li class="nav-item" th:if="${account == null}">
+                    <a class="nav-link" th:href="@{/newaccount}" th:text="#{createUserAcc}">Create User</a>
+                </li>
+
+                <li class="nav-item" th:if="${account == null}">
+                    <a class="nav-link" th:href="@{/login}" th:text="#{login}">Login</a>
+                </li>
+
+                <li class="nav-item text-decoration-underline" th:if="${account != null}">
+                    <a class="nav-link" th:href="@{/userAccount}" th:text="${account.getName}" ></a>
+                </li>
+                <li class="nav-item bg-danger" th:if="${account != null}">
+                    <a class="nav-link" th:href="@{/logout}" th:text="#{Logout}">Logout</a>
+                </li>
+
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        Language
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                        <li><a class="dropdown-item" th:href="@{/(lang='en')}">EN</a></li>
+                        <li><a class="dropdown-item" th:href="@{/(lang='nl')}">NL</a></li>
+                        <li><a class="dropdown-item" th:href="@{/(lang='de')}">DE</a></li>
+                        <li><a class="dropdown-item" th:href="@{/(lang='fr')}">FR</a></li>
+                    </ul>
+                </div>
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+</body>
+</html>

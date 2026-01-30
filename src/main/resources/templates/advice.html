@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{generatedAdvice}">Generated Advice</title>
+
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container mt-4 mb-5">
+    <h1 class="mb-4 text-gradient" th:text="#{generatedAdvice}">Generated Advice</h1>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0"><i class="bi bi-lightbulb-fill me-2"></i>Your Personalized Advice</h5>
+        </div>
+        <div class="card-body">
+            <p class="lead mb-0" th:text="${adviceInfo}">Advice text will appear here.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0"><i class="bi bi-info-circle-fill me-2"></i>Detailed Information</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover w-auto">
+                <tbody>
+                <tr>
+                    <th>Risk Level</th>
+                    <td th:text="${advice.riskLevel}">-</td>
+                </tr>
+                <tr>
+                    <th>UV Index</th>
+                    <td th:text="${uvIndex}">-</td>
+                </tr>
+                <tr>
+                    <th>Air Pollution Level</th>
+                    <td th:text="${pollutionLevel}">-</td>
+                </tr>
+                <tr>
+                    <th>Observation Date</th>
+                    <td th:text="${observationDate}">-</td>
+                </tr>
+                <tr>
+                    <th>Observation Time</th>
+                    <td th:text="${observationTime}">-</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <a class="btn btn-primary mt-4" href="/" th:text="#{backHome}">Back to Home</a>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>

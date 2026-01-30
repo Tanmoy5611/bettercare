@@ -1,0 +1,181 @@
+.email-settings {
+    background: linear-gradient(135deg, #1f2933, #111827);
+    border: 1px solid #2d3748;
+    border-radius: 14px;
+    color: #e5e7eb;
+}
+
+.email-settings h5 {
+    color: #f9fafb;
+}
+
+.email-settings .form-check-label {
+    color: #e5e7eb;
+}
+
+.email-settings .form-check-input {
+    background-color: #111827;
+    border-color: #6b7280;
+}
+
+.email-settings .btn-primary {
+    background-color: #3b82f6;
+    border: none;
+}
+
+.email-settings .btn-primary:hover {
+    background-color: #2563eb;
+}
+
+.email-settings .badge {
+    font-size: 0.8rem;
+}
+
+.notification-card {
+    display: flex;
+    gap: 16px;
+    padding: 18px;
+    margin-bottom: 14px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.notification-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+}
+
+.notification-icon {
+    font-size: 1.9rem;
+    opacity: 0.9;
+    margin-top: 2px;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-date {
+    font-size: 0.85rem;
+    opacity: 0.75;
+    margin-top: 6px;
+}
+
+.notification-info {
+    background: linear-gradient(135deg, #3a7ca5, #4d96ff);
+    color: #f8fafc;
+}
+
+
+.notification-warning {
+    background: linear-gradient(135deg, #d4b24c, #e8c872);
+    color: #1a1a1a;
+}
+
+
+.notification-danger {
+    background: linear-gradient(135deg, #b23a48, #d64550);
+    color: #fef2f2;
+}
+
+
+.notification-card .btn {
+    backdrop-filter: blur(4px);
+    border-radius: 8px;
+}
+
+
+.home-alert-card {
+    border-radius: 14px;
+    padding: 18px;
+    height: 100%;
+    color: #fff;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.35);
+    transition: all 0.25s ease;
+    cursor: pointer;
+}
+
+.home-alert-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 12px 26px rgba(0,0,0,0.55);
+}
+
+.home-alert-card.warning {
+    background: linear-gradient(135deg, #f1c40f, #e67e22);
+}
+
+.home-alert-card.info {
+    background: linear-gradient(135deg, #3498db, #5dade2);
+}
+
+.home-alert-card.danger {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+}
+
+.alert-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.alert-level {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.badge-new {
+    background: #ffffff;
+    color: #000;
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.alert-message {
+    font-size: 0.95rem;
+    margin: 6px 0 10px;
+}
+
+.alert-time {
+    font-size: 0.75rem;
+    opacity: 0.85;
+}
+
+
+.home-alert-card {
+    color: #000 !important;
+}
+
+
+.home-alert-card .alert-level {
+    color: #000 !important;
+    font-weight: 700;
+}
+
+.home-alert-card .alert-message {
+    color: #000 !important;
+    font-weight: 500;
+}
+
+
+.home-alert-card .alert-time {
+    color: #000 !important;
+    font-size: 0.85rem;
+    opacity: 1 !important;
+}
+
+.home-alert-card .badge-new {
+    background: #ffffff;
+    color: #16a34a !important; /* GREEN text */
+    font-weight: 700;
+    border: 1px solid #16a34a;
+}
+
+.back-home-btn:hover {
+    background-color: #ffffff;
+    color: #000000 !important;
+    box-shadow: 0 0 0 rgba(255, 255, 255, 0.7);
+}

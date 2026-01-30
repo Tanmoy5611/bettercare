@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<div class="container py-4">
+<h2 class="mb-4" th:text="#{login}">Login</h2>
+
+<div th:if="${errorMessage}" class="alert alert-danger">
+    <p th:text="${errorMessage}"></p>
+</div>
+
+<form th:action="@{/userAccounts/login}" th:object="${loginVM}" method="post" class="w-50 mt-3">
+
+    <div class="mb-3">
+        <label class="form-label" th:text="#{name}">Name:</label>
+        <input class="form-control" type="text" th:field="*{name}" name="name" >
+        <div class="bg-danger text-white" th:if="${submitted} and ${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" th:text="#{password}">Password:</label>
+        <input class="form-control" type="password" name="password" >
+        <div class="bg-danger text-white" th:if="${submitted} and ${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+    </div>
+
+    <button class="btn btn-primary" type="submit" th:text="#{login}">Login</button>
+</form>
+</div>
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>

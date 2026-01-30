@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      background: #fffbea;
+      padding: 0;
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    .card {
+      max-width: 650px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 18px;
+      border: 1px solid #ffe69c;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+    }
+
+    .header {
+      text-align: center;
+      color: #d39e00;
+      font-weight: bold;
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+
+    .message-box {
+      margin-top: 20px;
+      padding: 20px;
+      background: #fff3cd;
+      border-left: 6px solid #ffc107;
+      border-radius: 12px;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    .stats {
+      margin-top: 18px;
+      padding: 16px;
+      background: #f8f9fa;
+      border-radius: 12px;
+      font-size: 15px;
+    }
+
+    .stats li {
+      margin: 6px 0;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 20px;
+      background: #ffc107;
+      color: #212529;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+
+    .footer {
+      margin-top: 25px;
+      text-align: center;
+      font-size: 12px;
+      color: #6c757d;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <!-- Header -->
+  <div class="header">
+    ⚠️ BetterCare Warning
+  </div>
+
+  <!-- Greeting -->
+  <p>
+    <strong>Dear <span th:text="${userName}">User</span>,</strong>
+  </p>
+
+  <p>
+    This is a precautionary health warning from <strong>BetterCare</strong>
+    based on your recent environmental conditions.
+  </p>
+
+  <!-- Alert message -->
+  <div class="message-box">
+    <p th:utext="${message}"></p>
+  </div>
+
+  <!-- Health stats -->
+  <div class="stats">
+    <ul>
+      <li><strong>Health Score:</strong> <span th:text="${healthScore}"></span>/100</li>
+      <li><strong>UV Index:</strong> <span th:text="${uvIndex}"></span></li>
+      <li><strong>Air Quality:</strong> <span th:text="${airQuality}"></span></li>
+    </ul>
+  </div>
+
+  <!-- link to details -->
+  <a th:href="${detailsUrl}" class="btn">
+    View details in BetterCare
+  </a>
+
+  <!-- Footer -->
+  <div class="footer">
+    This message was generated automatically to help you take
+    preventive action and stay safe.
+  </div>
+
+</div>
+
+</body>
+</html>
