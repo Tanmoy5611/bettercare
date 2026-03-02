@@ -31,7 +31,7 @@ public class WeatherAlertService {
     }
 
     // Scheduled task that runs every 5 minutes.
-    @Scheduled(fixedRate = 300000)
+    // @Scheduled(fixedRate = 300000)
     public void autoCheckSensors() {
         System.out.println("Running scheduled weather alert check...");
 
