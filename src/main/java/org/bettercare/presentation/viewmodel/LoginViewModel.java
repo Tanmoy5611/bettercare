@@ -1,4 +1,4 @@
-package org.bettercare.business.viewmodel;
+package org.bettercare.presentation.viewmodel;
 import jakarta.validation.constraints.NotBlank;
 
 public class LoginViewModel {
