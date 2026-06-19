@@ -1,3 +1,4 @@
+-- User account details are stored in this table
 CREATE TABLE user_accounts (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL UNIQUE,
@@ -7,6 +8,7 @@ CREATE TABLE user_accounts (
     receive_email_alerts BOOLEAN DEFAULT FALSE
 );
 
+-- Each profile belongs to one user account
 CREATE TABLE user_profile (
     profile_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
