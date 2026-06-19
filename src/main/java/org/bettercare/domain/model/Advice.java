@@ -1,4 +1,6 @@
-package org.bettercare.business.entities;
+package org.bettercare.domain.model;
+
+// This object keeps the risk number and the advice text together
 
 public class Advice {
     private int riskLevel;

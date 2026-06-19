@@ -1,6 +1,6 @@
-package org.bettercare.business.entities;
+package org.bettercare.domain.model;
 
-import org.bettercare.business.entities.enums.NOTIFICATION_LEVEL;
+import org.bettercare.domain.model.enums.NotificationLevel;
 
 import java.time.LocalDateTime;
 
@@ -8,7 +8,7 @@ public class Notification {
     private int notificationId;
     private UserAccount user;  // receiver
     private String message;
-    private NOTIFICATION_LEVEL level;  // INFO / WARNING / DANGER
+    private NotificationLevel level;  // INFO / WARNING / DANGER
     private LocalDateTime createdAt;   // when created
     private boolean seen;
 
@@ -16,7 +16,7 @@ public class Notification {
     }
 
     public Notification(String message,
-                        NOTIFICATION_LEVEL level,
+                        NotificationLevel level,
                         LocalDateTime createdAt) {
         this.message = message;
         this.level = level;
@@ -26,7 +26,7 @@ public class Notification {
 
     public Notification(UserAccount user,
                         String message,
-                        NOTIFICATION_LEVEL level,
+                        NotificationLevel level,
                         LocalDateTime createdAt) {
         this.user = user;
         this.message = message;
@@ -60,11 +60,11 @@ public class Notification {
         this.message = message;
     }
 
-    public NOTIFICATION_LEVEL getLevel() {
+    public NotificationLevel getLevel() {
         return level;
     }
 
-    public void setLevel(NOTIFICATION_LEVEL level) {
+    public void setLevel(NotificationLevel level) {
         this.level = level;
     }
 

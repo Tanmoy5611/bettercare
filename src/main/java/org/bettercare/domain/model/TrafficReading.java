@@ -1,4 +1,4 @@
-package org.bettercare.business.entities;
+package org.bettercare.domain.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

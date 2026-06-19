@@ -1,13 +1,13 @@
-package org.bettercare.business.entities;
+package org.bettercare.domain.model;
 
-import org.bettercare.business.entities.enums.SKIN_COLOR;
+import org.bettercare.domain.model.enums.SkinColor;
 import java.util.List;
 
 public class UserProfile {
 
     private int profileId;
     private String name;
-    private SKIN_COLOR skinColor;
+    private SkinColor skinColor;
     private int age;
     private int userAccountId;
     private double sunExposure;
@@ -42,7 +42,7 @@ public class UserProfile {
         this.name = name;
     }
 
-    public void setSkinColor(SKIN_COLOR skinColor) {
+    public void setSkinColor(SkinColor skinColor) {
         this.skinColor = skinColor;
     }
 
@@ -56,7 +56,7 @@ public class UserProfile {
 
     private List<String> healthConditions;
 
-    public UserProfile(String name, SKIN_COLOR skinColor, int age
+    public UserProfile(String name, SkinColor skinColor, int age
                        ) {
         this.name = name;
         this.skinColor = skinColor;
@@ -67,7 +67,7 @@ public class UserProfile {
         return name;
     }
 
-    public SKIN_COLOR getSkinColor() {
+    public SkinColor getSkinColor() {
         return skinColor;
     }
 
