@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Wait until the page is ready before creating the charts
     const config = window.AppConfig;
+    if (!config || typeof Chart === 'undefined') return;
 
     // Global Chart Defaults
     Chart.defaults.color = '#e0e0e0';
@@ -95,8 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    /** * Helper: Update Chart Data based on Timescale
-     */
+    /* Helper: Update Chart Data based on Timescale */
     function updateChart(chartInstance, fullData, timescale, keys) {
         const now = new Date();
         let cutoff;

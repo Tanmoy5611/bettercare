@@ -1,3 +1,4 @@
+// Hide the top message after a short time so it does not stay on the screen
 setTimeout(() => {
     const banner = document.getElementById('notification-banner');
     if (banner) banner.style.display = 'none';
@@ -9,9 +10,12 @@ function hideBanner() {
 }
 
 function setPollutionClass() {
+    // Pick the colour class that matches the pollution value
     const pollutionCard = document.getElementById('pollution-card');
     if (pollutionCard) {
-        const level = parseInt(pollutionCard.getAttribute('data-pollution'));
+        const level = Number(pollutionCard.getAttribute('data-pollution'));
+        if (!Number.isFinite(level)) return;
+        pollutionCard.classList.remove('pollution-good', 'pollution-moderate', 'pollution-unhealthy-sensitive', 'pollution-unhealthy', 'pollution-very-unhealthy', 'pollution-hazardous');
         let className = 'pollution-good';
         
         if (level <= 50) {
@@ -35,7 +39,9 @@ function setPollutionClass() {
 function setUvClass() {
     const uvCard = document.getElementById('uv-card');
     if (uvCard) {
-        const index = parseInt(uvCard.getAttribute('data-uv'));
+        const index = Number(uvCard.getAttribute('data-uv'));
+        if (!Number.isFinite(index)) return;
+        uvCard.classList.remove('uv-low', 'uv-moderate', 'uv-high', 'uv-very-high');
         let className = 'uv-low';
         
         if (index >= 1 && index <= 2) {
@@ -87,9 +93,10 @@ function setNotificationBannerClass() {
 function setFuturePollutionClass() {
     const pollutionCard = document.getElementById('future-pollution-card');
     if (pollutionCard) {
-        const future = parseInt(pollutionCard.getAttribute('data-future'));
-        const current = parseInt(pollutionCard.getAttribute('data-current'));
-        pollutionCard.classList.remove('pollution-good', 'pollution-moderate', 'pollution-unhealthy');
+        const future = Number(pollutionCard.getAttribute('data-future'));
+        const current = Number(pollutionCard.getAttribute('data-current'));
+        if (!Number.isFinite(future) || !Number.isFinite(current)) return;
+        pollutionCard.classList.remove('pollution-good', 'pollution-moderate', 'pollution-unhealthy-sensitive', 'pollution-unhealthy', 'pollution-very-unhealthy', 'pollution-hazardous');
 
         let className = '';
 

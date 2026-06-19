@@ -1,9 +1,17 @@
-/* Page-specific styles for home.html */
+/* These styles are only used by the home page */
 
 .hero {
-    padding: 120px 0 100px;
+    min-height: 0;
+    padding: 3.25rem 0 2rem;
 }
 
+@media (max-width: 768px) {
+    .hero {
+        height: auto;
+        min-height: 0;
+        padding: 3rem 1rem 2rem;
+    }
+}
 
 .alert-banner {
     max-width: 1100px;
@@ -12,12 +20,10 @@
     border-radius: 18px;
 }
 
-
 .reading-card {
     border-radius: 22px;
     padding: 30px;
 }
-
 
 .feature-card {
     border-radius: 22px;

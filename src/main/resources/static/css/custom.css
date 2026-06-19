@@ -1,6 +1,4 @@
-/* ============================================
-   CSS VARIABLES - COLOR SYSTEM
-   ============================================ */
+/* These shared colours keep the page style consistent */
 :root {
     --primary-color: #0d6efd;
     --primary-dark: #0a58ca;
@@ -48,16 +46,6 @@ body {
     color: var(--text-light) !important;
     background-color: var(--dark-color) !important;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-body > div:first-of-type {
-    flex-shrink: 0;
-}
-
-main, .container:not(:last-child) {
-    flex: 1 0 auto;
 }
 
 body.bg-light,
@@ -200,6 +188,7 @@ table, thead, tbody, tr, td, th {
 .hero .container {
     position: relative;
     z-index: 1;
+    width: 100%;
 }
 
 .hero h1 {
