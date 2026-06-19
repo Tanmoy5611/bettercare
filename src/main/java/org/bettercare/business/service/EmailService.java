@@ -1,7 +1,9 @@
-package org.bettercare.business.services;
+package org.bettercare.business.service;
+
+// This service builds and sends the email alerts
 
 import jakarta.mail.internet.MimeMessage;
-import org.bettercare.business.entities.enums.NOTIFICATION_LEVEL;
+import org.bettercare.domain.model.enums.NotificationLevel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,7 +38,7 @@ public class EmailService {
     // Simple alert email
     public void sendAlertEmail(String to,
                                String message,
-                               NOTIFICATION_LEVEL level) {
+                               NotificationLevel level) {
 
         String template = switch (level) {
             case INFO -> "email/alert-info.html";
@@ -69,7 +71,7 @@ public class EmailService {
                                        int healthScore,
                                        int uvIndex,
                                        int airQuality,
-                                       NOTIFICATION_LEVEL level) {
+                                       NotificationLevel level) {
 
         String template = switch (level) {
             case INFO -> "email/alert-info.html";

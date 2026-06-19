@@ -1,4 +1,6 @@
-package org.bettercare.business.services.intelligence;
+package org.bettercare.business.intelligence;
+
+// This class predicts how the air quality may look in two hours
 
 import ai.onnxruntime.OrtEnvironment;
 import ai.onnxruntime.OrtException;
@@ -8,8 +10,8 @@ import ai.onnxruntime.OnnxTensor;
 import java.time.LocalTime;
 import java.util.Collections;
 
-import org.bettercare.business.services.PollutionService;
-import org.bettercare.business.services.TrafficReadingService;
+import org.bettercare.business.service.PollutionService;
+import org.bettercare.business.service.TrafficReadingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,7 @@ public class FutureAirQualityAi {
     private final PollutionService pollutionService;
 
     public FutureAirQualityAi(TrafficReadingService trafficReadingService, PollutionService pollutionService) throws Exception {
+        // Load the future prediction model when the service starts
         this.env = OrtEnvironment.getEnvironment();
         byte[] modelBytes = getClass().getResourceAsStream("/models/air_quality_2h_forest.onnx").readAllBytes();
         this.session = env.createSession(modelBytes);
@@ -33,6 +36,7 @@ public class FutureAirQualityAi {
     //Predict Air Quality in 2h
     public int futureAirQuality() {
         try {
+            // Current pollution is included because it affects the later value
             double hour = LocalTime.now().getHour();
             double minute = LocalTime.now().getMinute();
             double congestion = trafficReadingService.getCongestionLevel();

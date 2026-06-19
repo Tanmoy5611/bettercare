@@ -1,7 +1,7 @@
-package org.bettercare.business.services;
+package org.bettercare.business.service;
 
-import org.bettercare.business.entities.Observation;
-import org.bettercare.business.services.intelligence.AirQualityAi;
+import org.bettercare.domain.model.Observation;
+import org.bettercare.business.intelligence.AirQualityAi;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,5 +29,4 @@ public class PollutionService {
 
         return pollutionAVG;
     }
-
 }

@@ -1,4 +1,4 @@
-package org.bettercare.business.services;
+package org.bettercare.business.service;
 
 import org.springframework.stereotype.Service;
 
@@ -11,6 +11,7 @@ import java.util.HexFormat;
 public class PasswordService {
 
     public String hash(String rawPassword) {
+        // Passwords are changed into a hash before they are saved
         if (rawPassword == null || rawPassword.isBlank()) {
             throw new IllegalArgumentException("Password cannot be empty");
         }
@@ -25,6 +26,7 @@ public class PasswordService {
     }
 
     public boolean matches(String rawPassword, String storedPassword) {
+        // We hash the login password too so we can compare two safe values
         if (rawPassword == null || storedPassword == null) {
             return false;
         }

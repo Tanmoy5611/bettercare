@@ -1,9 +1,9 @@
-package org.bettercare.business.services;
+package org.bettercare.business.service;
 
-import org.bettercare.business.entities.Notification;
-import org.bettercare.business.entities.UserAccount;
-import org.bettercare.business.entities.enums.NOTIFICATION_LEVEL;
-import org.bettercare.data.repository.NotificationRepository;
+import org.bettercare.domain.model.Notification;
+import org.bettercare.domain.model.UserAccount;
+import org.bettercare.domain.model.enums.NotificationLevel;
+import org.bettercare.business.repository.NotificationRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,7 +21,7 @@ public class NotificationService {
     // user specific notification (stored only for this user)
     public void createNotification(UserAccount user,
                                    String message,
-                                   NOTIFICATION_LEVEL level) {
+                                   NotificationLevel level) {
 
         Notification notification =
                 new Notification(user, message, level, LocalDateTime.now());

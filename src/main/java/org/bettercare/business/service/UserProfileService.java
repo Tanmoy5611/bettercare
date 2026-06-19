@@ -1,8 +1,8 @@
-package org.bettercare.business.services;
+package org.bettercare.business.service;
 
-import org.bettercare.business.entities.UserAccount;
-import org.bettercare.business.entities.UserProfile;
-import org.bettercare.data.repository.IUserProfileRepository;
+import org.bettercare.domain.model.UserAccount;
+import org.bettercare.domain.model.UserProfile;
+import org.bettercare.business.repository.UserProfileRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,9 +10,9 @@ import java.util.List;
 @Service
 public class UserProfileService {
 
-    private final IUserProfileRepository repo;
+    private final UserProfileRepository repo;
 
-    public UserProfileService(IUserProfileRepository repo) {
+    public UserProfileService(UserProfileRepository repo) {
         this.repo = repo;
     }
 

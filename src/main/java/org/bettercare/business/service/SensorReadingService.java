@@ -1,7 +1,7 @@
-package org.bettercare.business.services;
+package org.bettercare.business.service;
 
-import org.bettercare.business.entities.Observation;
-import org.bettercare.data.repository.SensorReadingRepository;
+import org.bettercare.domain.model.Observation;
+import org.bettercare.business.repository.SensorReadingRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,8 +1,10 @@
-package org.bettercare.business.services;
+package org.bettercare.business.service;
 
-import org.bettercare.business.entities.Observation;
-import org.bettercare.business.entities.UserAccount;
-import org.bettercare.business.entities.enums.NOTIFICATION_LEVEL;
+// This service checks weather values and creates alerts when needed
+
+import org.bettercare.domain.model.Observation;
+import org.bettercare.domain.model.UserAccount;
+import org.bettercare.domain.model.enums.NotificationLevel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -69,42 +71,42 @@ public class WeatherAlertService {
         int pollution = pollutionService.getPollutionAVG();
 
         StringBuilder emailSummary = new StringBuilder();
-        NOTIFICATION_LEVEL highestLevel = NOTIFICATION_LEVEL.INFO;
+        NotificationLevel highestLevel = NotificationLevel.INFO;
 
         // Calculate and store daily health score
         int healthScore = calculateHealthScore(uv, pollution);
 
         // INFO notification (always)
         String infoMsg = "Health Score Today: " + healthScore + "/100";
-        notificationService.createNotification(user, infoMsg, NOTIFICATION_LEVEL.INFO);
+        notificationService.createNotification(user, infoMsg, NotificationLevel.INFO);
         emailSummary.append(infoMsg).append("<br><br>");
 
         // UV evaluation rules
         if (uv >= 8) {
             String msg = "EXTREME UV (" + uv + ") – Avoid direct sunlight.";
-            notificationService.createNotification(user, msg, NOTIFICATION_LEVEL.DANGER);
+            notificationService.createNotification(user, msg, NotificationLevel.DANGER);
             emailSummary.append(msg).append("<br><br>");
-            highestLevel = NOTIFICATION_LEVEL.DANGER;
+            highestLevel = NotificationLevel.DANGER;
 
         } else if (uv >= 6) {
             String msg = "HIGH UV (" + uv + ") – Use SPF 30+.";
-            notificationService.createNotification(user, msg, NOTIFICATION_LEVEL.WARNING);
+            notificationService.createNotification(user, msg, NotificationLevel.WARNING);
             emailSummary.append(msg).append("<br><br>");
-            highestLevel = maxLevel(highestLevel, NOTIFICATION_LEVEL.WARNING);
+            highestLevel = maxLevel(highestLevel, NotificationLevel.WARNING);
         }
 
         // Air quality evaluation rules
         if (pollution > 150) {
             String msg = "Unhealthy air quality (" + pollution + "). Ventilate immediately!";
-            notificationService.createNotification(user, msg, NOTIFICATION_LEVEL.DANGER);
+            notificationService.createNotification(user, msg, NotificationLevel.DANGER);
             emailSummary.append(msg).append("<br><br>");
-            highestLevel = NOTIFICATION_LEVEL.DANGER;
+            highestLevel = NotificationLevel.DANGER;
 
         } else if (pollution > 100) {
             String msg = "Moderate air quality (" + pollution + ").";
-            notificationService.createNotification(user, msg, NOTIFICATION_LEVEL.WARNING);
+            notificationService.createNotification(user, msg, NotificationLevel.WARNING);
             emailSummary.append(msg).append("<br><br>");
-            highestLevel = maxLevel(highestLevel, NOTIFICATION_LEVEL.WARNING);
+            highestLevel = maxLevel(highestLevel, NotificationLevel.WARNING);
         }
 
         // Send email for INFO, WARNING, and DANGER if user enabled alerts
@@ -123,7 +125,7 @@ public class WeatherAlertService {
     }
 
     // Helper to pick stronger notification level
-    private NOTIFICATION_LEVEL maxLevel(NOTIFICATION_LEVEL a, NOTIFICATION_LEVEL b) {
+    private NotificationLevel maxLevel(NotificationLevel a, NotificationLevel b) {
         return (a.ordinal() < b.ordinal()) ? b : a;
     }
 

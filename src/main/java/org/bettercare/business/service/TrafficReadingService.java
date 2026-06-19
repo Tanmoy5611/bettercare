@@ -1,7 +1,7 @@
-package org.bettercare.business.services;
+package org.bettercare.business.service;
 
-import org.bettercare.business.entities.TrafficReading;
-import org.bettercare.data.repository.TrafficReadingRepository;
+import org.bettercare.domain.model.TrafficReading;
+import org.bettercare.business.repository.TrafficReadingRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

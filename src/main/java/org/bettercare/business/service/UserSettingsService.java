@@ -1,4 +1,4 @@
-package org.bettercare.business.services;
+package org.bettercare.business.service;
 
 import org.springframework.stereotype.Service;
 

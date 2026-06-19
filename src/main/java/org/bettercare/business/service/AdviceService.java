@@ -1,7 +1,7 @@
-package org.bettercare.business.services;
+package org.bettercare.business.service;
 
-import org.bettercare.business.entities.Advice;
-import org.bettercare.business.entities.Observation;
+import org.bettercare.domain.model.Advice;
+import org.bettercare.domain.model.Observation;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -21,6 +21,7 @@ public class AdviceService {
     }
 
     public Advice generateAdvice() {
+        // We use the newest sensor reading to make the advice feel current
         List<Observation> observations = sensorReadingService.getObservations();
         if (observations == null || observations.isEmpty()) {
             return new Advice(0, "No sensor data available to generate advice.");
@@ -45,6 +46,7 @@ public class AdviceService {
     }
 
     public String calculateHighestDangerLevel(int pollution, int uv) {
+        // Turn both measurements into the same danger scale before comparing them
         String pollutionLevel;
         if (pollution <= 50) {
             pollutionLevel = "good";
@@ -77,6 +79,7 @@ public class AdviceService {
     }
 
     private int calculateRiskLevel(LocalTime time) {
+        // The risk goes up by one for every hour after 10 AM
         int risk = 0;
         if (time.getHour() > 10) risk++;
         if (time.getHour() > 11) risk++;
@@ -122,6 +125,7 @@ public class AdviceService {
                                       String uvAdvice,
                                       String pollutionAdvice,
                                       int riskLevel) {
+        // Put all advice parts together so the page can show one clear message
         return "Date: " + date + "\n\n" +
                 timeAdvice + "\n\n" +
                 "UV Advice:\n" +
