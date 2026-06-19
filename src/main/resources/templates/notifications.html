@@ -3,15 +3,15 @@
 <head>
     <title th:text="#{notifications.title}">Your Notifications</title>
     <link rel="stylesheet" th:href="@{/css/custom.css}">
-    <link rel="stylesheet" th:href="@{/css/custom.css}">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
     <link rel="stylesheet" th:href="@{/css/notification.css}">
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 </head>
 
 <body class="bg-dark text-light">
 
+<!-- Use the shared navigation on the notifications page -->
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
 <div class="container mt-4">
@@ -116,6 +116,11 @@
                 </button>
             </form>
         </div>
+    </div>
+
+    <div class="card text-center p-4" th:if="${#lists.isEmpty(alerts)}">
+        <i class="bi bi-bell-slash fs-2 mb-2"></i>
+        <p class="mb-0">You do not have any notifications yet.</p>
     </div>
 
 </div>

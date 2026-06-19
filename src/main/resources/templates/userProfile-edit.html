@@ -6,6 +6,8 @@
   <title>Edit Profile</title>
   <link rel="stylesheet" th:href="@{/css/custom.css}">
   <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
+  <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 </head>
 <body class="bg-light">
 <div th:replace="~{fragments/navbar :: navbar}"></div>
@@ -15,6 +17,7 @@
 
   <div class="card">
     <div class="card-body">
+      <!-- This form updates the profile that belongs to the current user -->
       <form th:action="@{/update/{id}(id=${profile.profileId})}" method="post">
     <div class="mb-3">
       <label class="form-label" th:text="#{name}">Name</label>

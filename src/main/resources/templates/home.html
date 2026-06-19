@@ -3,15 +3,19 @@
 <head>
     <title>BetterCare</title>
     <link rel="stylesheet" th:href="@{/css/custom.css}">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
     <link rel="stylesheet" th:href="@{/css/notification.css}">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
+<!-- The navigation is shared so users can move between the main pages -->
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
+<!-- Only show this banner when there is a latest sensor reading -->
 <div th:if="${latest != null}" id="notification-banner"
      class="alert-banner"
      th:attr="data-danger-level=${highestDangerLevel}">
@@ -84,14 +88,16 @@
         </div>
     </div>
 
-    <div class="col-md-6">
-        <div class="reading-card"
-             th:attr="data-current=${pollAVG}, data-future=${futureAQ}"
-             id="future-pollution-card">
-            <div class="reading-label">
-                <span th:if="${futureAQ} < ${pollAVG}">Air Quality will get better within the next 2h, try to go out later</span>
-                <span th:if="${futureAQ} > ${pollAVG}">Air Quality will worsen in the next 2h, try to go out now if you have to</span>
-                <span th:if="${futureAQ} == ${pollAVG}">No change to Air Quality expected in the next 2h</span>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="reading-card"
+                 th:attr="data-current=${pollAVG}, data-future=${futureAQ}"
+                 id="future-pollution-card">
+                <div class="reading-label">
+                    <span th:if="${futureAQ} < ${pollAVG}">Air Quality will get better within the next 2h, try to go out later</span>
+                    <span th:if="${futureAQ} > ${pollAVG}">Air Quality will worsen in the next 2h, try to go out now if you have to</span>
+                    <span th:if="${futureAQ} == ${pollAVG}">No change to Air Quality expected in the next 2h</span>
+                </div>
             </div>
         </div>
     </div>
@@ -314,9 +320,6 @@
 <script src="/js/graphs.js"></script>
 
 <script th:src="@{/js/custom.js}"></script>
-
-
-<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
 <div th:replace="~{fragments/footer :: footer}"></div>
 

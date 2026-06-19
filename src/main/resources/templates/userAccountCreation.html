@@ -10,31 +10,32 @@
 <body >
 
 <div th:replace="~{fragments/navbar :: navbar}"></div>
-<div class="container py-4">
+<main class="container py-4">
 <h2 class="mb-4" th:text="#{createUserAcc}">Create User Account</h2>
 
-<form th:action="@{/userAccounts/create}" method="post" class="w-50" th:object="${creationVM}">
+<!-- This form sends the new account details to the controller -->
+<form th:action="@{/userAccounts/create}" method="post" class="col-12 col-md-8 col-lg-6" th:object="${creationVM}" novalidate>
 
     <div class="mb-3">
         <label class="form-label" th:text="#{name}">Name:</label>
-        <input class="form-control" type="text" th:field="*{name}" name="name" >
-        <div class="bg-danger text-white" th:if="${submitted} and ${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        <input class="form-control" type="text" th:field="*{name}" autocomplete="username" required>
+        <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
         </div>
     <div class="mb-3">
         <label class="form-label" th:text="#{email}">Email:</label>
-        <input class="form-control" type="email" th:field="*{email}" name="email" >
-        <div class="bg-danger text-white" th:if="${submitted} and ${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+        <input class="form-control" type="email" th:field="*{email}" autocomplete="email" required>
+        <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
     </div>
 
     <div class="mb-3">
         <label class="form-label" th:text="#{password}">Password:</label>
-        <input class="form-control" type="password" th:field="*{password}" name="password1" >
-        <div class="bg-danger text-white" th:if="${submitted} and ${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+        <input class="form-control" type="password" th:field="*{password}" autocomplete="new-password" required>
+        <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
     </div>
 
     <button class="btn btn-primary" type="submit" th:text="#{create}">Create</button>
 </form>
-</div>
+</main>
 <div th:replace="~{fragments/footer :: footer}"></div>
 
 </body>
