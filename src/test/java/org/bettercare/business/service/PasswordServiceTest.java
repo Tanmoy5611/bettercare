@@ -1,4 +1,4 @@
-package org.bettercare.business.services;
+package org.bettercare.business.service;
 
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +10,7 @@ class PasswordServiceTest {
 
     @Test
     void hashesPasswordAndMatchesRawPassword() {
+        // A saved password should not look like the password that was typed
         String hashed = passwordService.hash("password123");
 
         assertNotEquals("password123", hashed);

@@ -1,10 +1,10 @@
 package org.bettercare;
 
-import org.bettercare.business.entities.UserAccount;
-import org.bettercare.business.services.NotificationService;
-import org.bettercare.business.services.SensorReadingService;
-import org.bettercare.business.services.TrafficReadingService;
-import org.bettercare.business.services.UserAccountService;
+import org.bettercare.domain.model.UserAccount;
+import org.bettercare.business.service.NotificationService;
+import org.bettercare.business.service.SensorReadingService;
+import org.bettercare.business.service.TrafficReadingService;
+import org.bettercare.business.service.UserAccountService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,6 +28,7 @@ class BetterCareApplicationSmokeTest {
 
     @Test
     void contextLoadsWithDemoData() {
+        // This checks that the main demo data is ready when the app starts
         UserAccount demoUser = userAccountService.loginVerification("demo", "password123");
 
         assertFalse(sensorReadingService.getObservations().isEmpty());
