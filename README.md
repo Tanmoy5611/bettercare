@@ -2,7 +2,7 @@
 
 A Spring Boot–based environmental monitoring platform that processes sensor data (UV index, pollution, traffic), generates intelligent alerts, and provides a dashboard for users to monitor environmental conditions in real time.
 
-This project was developed as part of an Integration / Software Engineering course, focusing on layered architecture, clean design principles, and real-world backend structure.
+This project was developed as part of atSoftware Engineering course (Year-2/ Semester:1), focusing on layered architecture, clean design principles, and real-world backend structure.
 
 ---
 
@@ -113,6 +113,35 @@ The application supports two database configurations to balance development spee
 **This separation allows:**
 * Easier local testing
 * Client demos without deployment complexity
+
+### Local Demo Login
+
+The H2 demo database creates one test account:
+
+* **Username:** `demo`
+* **Password:** `password123`
+
+### Private Configuration
+
+Real database and email credentials should not be committed. For email sending, set environment variables such as:
+
+```text
+BETTERCARE_MAIL_HOST
+BETTERCARE_MAIL_PORT
+BETTERCARE_MAIL_USERNAME
+BETTERCARE_MAIL_PASSWORD
+BETTERCARE_MAIL_FROM
+BETTERCARE_BASE_URL
+BETTERCARE_MAIL_AUTH
+BETTERCARE_MAIL_STARTTLS
+BETTERCARE_MAIL_STARTTLS_REQUIRED
+```
+
+The default `localhost:1025` target is for a local SMTP tool such as Mailpit or
+MailHog. The mail health check is intentionally enabled: if no SMTP service is
+running there, `/actuator/health` reports mail as unavailable. Set the values
+above to your provider's SMTP settings to send alerts and make the mail health
+check report `UP`.
 
 ## Project Structure
 

@@ -3,12 +3,15 @@ package org.bettercare.presentation.controller;
 import jakarta.servlet.http.HttpSession;
 import org.bettercare.business.entities.UserAccount;
 import org.bettercare.business.services.UserSettingsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class EmailAlertController {
+    private static final Logger log = LoggerFactory.getLogger(EmailAlertController.class);
 
     private final UserSettingsService userSettingsService;
 
@@ -34,7 +37,7 @@ public class EmailAlertController {
                 session.setAttribute("user", user);
 
         } catch (Exception e) {
-            System.out.println("Email settings update failed: " + e.getMessage());
+            log.warn("Email settings update failed", e);
         }
 
         return "redirect:/notifications";

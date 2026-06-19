@@ -2,6 +2,8 @@ package org.bettercare.business.services;
 
 import jakarta.mail.internet.MimeMessage;
 import org.bettercare.business.entities.enums.NOTIFICATION_LEVEL;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -14,12 +16,16 @@ import java.time.format.DateTimeFormatter;
 
 @Service
 public class EmailService {
+    private static final Logger log = LoggerFactory.getLogger(EmailService.class);
 
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
 
     @Value("${bettercare.from}")
     private String from;
+
+    @Value("${bettercare.base-url}")
+    private String baseUrl;
 
     public EmailService(JavaMailSender mailSender,
                         SpringTemplateEngine templateEngine) {
@@ -51,7 +57,7 @@ public class EmailService {
             sendEmail(to, "BetterCare Alert", htmlContent);
 
         } catch (Exception e) {
-            System.out.println("Template error: " + e.getMessage());
+            log.warn("Template rendering failed, using fallback email", e);
             sendEmail(to, "BetterCare Alert", buildFallbackHtml(message, now));
         }
     }
@@ -81,7 +87,7 @@ public class EmailService {
         ctx.setVariable("uvIndex", uvIndex);
         ctx.setVariable("airQuality", airQuality);
         ctx.setVariable("date", now);
-        ctx.setVariable("detailsUrl", "http://localhost:8080/notifications");
+        ctx.setVariable("detailsUrl", baseUrl + "/notifications");
 
         String html = templateEngine.process(template, ctx);
 
@@ -103,10 +109,10 @@ public class EmailService {
             helper.setText(html, true);
 
             mailSender.send(mail);
-            System.out.println("✔ Email sent to " + to);
+            log.info("Email sent to {}", to);
 
         } catch (Exception e) {
-            System.out.println("Email sending failed: " + e.getMessage());
+            log.warn("Email sending failed", e);
         }
     }
 

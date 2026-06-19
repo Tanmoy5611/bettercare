@@ -5,6 +5,8 @@ import ai.onnxruntime.OrtEnvironment;
 import ai.onnxruntime.OrtException;
 import ai.onnxruntime.OrtSession;
 import org.bettercare.business.services.SensorReadingService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import java.time.LocalTime;
 import java.util.Collections;
@@ -12,6 +14,7 @@ import java.time.LocalDate;
 
 @Service
 public class SunExAi {
+        private static final Logger log = LoggerFactory.getLogger(SunExAi.class);
 
         private OrtEnvironment env;
         private OrtSession session;
@@ -50,10 +53,10 @@ public class SunExAi {
                     return Math.round(output[0][0]);
                 }
             } catch (OrtException e) {
-                System.err.println("AI Model Error: " + e.getMessage());
+                log.warn("AI model error", e);
                 return -1;
             } catch (Exception e) {
-                e.printStackTrace();
+                log.warn("Sun exposure prediction failed", e);
                 return -1;
             }
         }

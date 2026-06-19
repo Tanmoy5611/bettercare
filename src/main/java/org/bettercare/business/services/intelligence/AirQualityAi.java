@@ -9,10 +9,13 @@ import java.time.LocalTime;
 import java.util.Collections;
 
 import org.bettercare.business.services.TrafficReadingService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AirQualityAi {
+    private static final Logger log = LoggerFactory.getLogger(AirQualityAi.class);
     private OrtEnvironment env;
     private OrtSession session;
     private final TrafficReadingService trafficReadingService;
@@ -40,10 +43,10 @@ public class AirQualityAi {
                 return Math.round(output[0][0]);
             }
         } catch (OrtException e) {
-            System.err.println("AI Model Error: " + e.getMessage());
+            log.warn("AI model error", e);
             return -1;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.warn("Air quality prediction failed", e);
             return -1;
         }
     }

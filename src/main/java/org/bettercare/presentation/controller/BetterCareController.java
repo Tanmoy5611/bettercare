@@ -2,6 +2,7 @@ package org.bettercare.presentation.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.bettercare.business.entities.*;
+import org.bettercare.business.services.AdviceService;
 import org.bettercare.business.services.PollutionService;
 import org.bettercare.business.services.SensorReadingService;
 import org.bettercare.business.services.TrafficReadingService;
@@ -21,17 +22,20 @@ public class BetterCareController {
     private final TrafficReadingService trafficReadingService;
     private final PollutionService pollutionService;
     private final FutureAirQualityAi futureAirQualityAi;
+    private final AdviceService adviceService;
 
     public BetterCareController(SensorReadingService sensorReadingService,
                                 NotificationService notificationService,
                                 TrafficReadingService trafficReadingService,
                                 PollutionService pollutionService,
-                                FutureAirQualityAi futureAirQualityAi) {
+                                FutureAirQualityAi futureAirQualityAi,
+                                AdviceService adviceService) {
         this.sensorReadingService = sensorReadingService;
         this.notificationService = notificationService;
         this.trafficReadingService = trafficReadingService;
         this.pollutionService = pollutionService;
         this.futureAirQualityAi = futureAirQualityAi;
+        this.adviceService = adviceService;
     }
 
     @GetMapping("/")
@@ -109,67 +113,19 @@ public class BetterCareController {
 
         // Generate advice for home
         if (!observations.isEmpty()) {
-            Advice advice = new Advice(sensorReadingService, pollutionService);
-            String adviceInfo = advice.generateAdvice();
+            Advice advice = adviceService.generateAdvice();
 
             model.addAttribute("advice", advice);
-            model.addAttribute("adviceInfo", adviceInfo);
+            model.addAttribute("adviceInfo", advice.getAdviceInfo());
             model.addAttribute("riskLevel", advice.getRiskLevel());
 
         }
 
         return "home";
     }
-    
-    /**
-     * Calculate the highest danger level based on pollution and UV index
-     * Returns: "hazardous", "very-unhealthy", "unhealthy", "unhealthy-sensitive", "moderate", or "good"
-     */
-    private String calculateHighestDangerLevel(int pollution, int uv) {
-        String pollutionLevel;
-        if (pollution <= 50) {
-            pollutionLevel = "good";
-        } else if (pollution <= 100) {
-            pollutionLevel = "moderate";
-        } else if (pollution <= 150) {
-            pollutionLevel = "unhealthy-sensitive";
-        } else if (pollution <= 200) {
-            pollutionLevel = "unhealthy";
-        } else if (pollution <= 300) {
-            pollutionLevel = "very-unhealthy";
-        } else {
-            pollutionLevel = "hazardous";
-        }
-        
-        String uvLevel;
-        if (uv >= 1 && uv <= 2) {
-            uvLevel = "good";
-        } else if (uv >= 3 && uv <= 5) {
-            uvLevel = "moderate";
-        } else if (uv >= 6 && uv <= 7) {
-            uvLevel = "unhealthy-sensitive";
-        } else if (uv >= 8) {
-            uvLevel = "unhealthy";
-        } else {
-            uvLevel = "good";
-        }
 
-        int pollutionRank = getDangerRank(pollutionLevel);
-        int uvRank = getDangerRank(uvLevel);
-        
-        return pollutionRank >= uvRank ? pollutionLevel : uvLevel;
-    }
-    
-    private int getDangerRank(String level) {
-        return switch (level) {
-            case "good" -> 0;
-            case "moderate" -> 1;
-            case "unhealthy-sensitive" -> 2;
-            case "unhealthy" -> 3;
-            case "very-unhealthy" -> 4;
-            case "hazardous" -> 5;
-            default -> 0;
-        };
+    private String calculateHighestDangerLevel(int pollution, int uv) {
+        return adviceService.calculateHighestDangerLevel(pollution, uv);
     }
 
 }

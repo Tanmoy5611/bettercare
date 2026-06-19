@@ -3,6 +3,7 @@ package org.bettercare.presentation.controller;
 import jakarta.servlet.http.HttpSession;
 import org.bettercare.business.entities.Advice;
 import org.bettercare.business.entities.UserAccount;
+import org.bettercare.business.services.AdviceService;
 import org.bettercare.business.services.PollutionService;
 import org.bettercare.business.services.SensorReadingService;
 import org.springframework.stereotype.Controller;
@@ -14,21 +15,24 @@ public class AdviceController {
 
     private SensorReadingService sensorReadingService;
     private PollutionService pollutionService;
+    private AdviceService adviceService;
 
-    public AdviceController(SensorReadingService sensorReadingService, PollutionService pollutionService) {
+    public AdviceController(SensorReadingService sensorReadingService,
+                            PollutionService pollutionService,
+                            AdviceService adviceService) {
         this.sensorReadingService = sensorReadingService;
         this.pollutionService = pollutionService;
+        this.adviceService = adviceService;
     }
 
     @GetMapping("/advice")
     public String showAdvice(Model model, HttpSession session) {
         UserAccount user = (UserAccount) session.getAttribute("user");
-        Advice advice = new Advice(sensorReadingService,pollutionService);
-        String adviceInfo = advice.generateAdvice();
+        Advice advice = adviceService.generateAdvice();
 
         model.addAttribute("account", user);
         model.addAttribute("advice", advice);
-        model.addAttribute("adviceInfo", adviceInfo);
+        model.addAttribute("adviceInfo", advice.getAdviceInfo());
 
         if (!sensorReadingService.getObservations().isEmpty()) {
             var observation = sensorReadingService.getObservations().getLast();

@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 @Controller
 public class UserAccountCreationController {
-private final UserAccountService userAccountService;
+    private final UserAccountService userAccountService;
     private final Logger log = LoggerFactory.getLogger(UserAccountCreationController.class);
 
     public UserAccountCreationController(UserAccountService userAccountService) {
@@ -34,7 +34,6 @@ private final UserAccountService userAccountService;
     @GetMapping("/login")
     public String Login(Model model, LoginViewModel loginViewModel) {
         model.addAttribute("loginVM", loginViewModel);
-        System.out.println("successful login page");
         return "userAccountLogin";
     }
 
@@ -81,7 +80,7 @@ private final UserAccountService userAccountService;
             model.addAttribute("account", account);
             session.setAttribute("user", account);
             session.setAttribute("loggedUserId", account.getUserId());
-            System.out.println("User logged in: ID = " + account.getUserId());
+            log.info("User logged in with id {}", account.getUserId());
             return "redirect:/userAccount";
         }
         else {

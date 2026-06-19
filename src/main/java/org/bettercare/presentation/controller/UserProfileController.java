@@ -7,6 +7,8 @@ import org.bettercare.business.entities.enums.SKIN_COLOR;
 import org.bettercare.business.services.UserAccountService;
 import org.bettercare.business.services.UserProfileService;
 import org.bettercare.business.services.intelligence.SunExAi;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,7 @@ import java.util.List;
 
 @Controller
 public class UserProfileController {
+    private static final Logger log = LoggerFactory.getLogger(UserProfileController.class);
 
     private final UserProfileService profileService;
     private final UserAccountService accountService;
@@ -58,7 +61,7 @@ public class UserProfileController {
         redirectAttributes.addFlashAttribute("successMessage", "Profile created successfully.");
         profileService.save(profile);
         model.addAttribute("account", user);
-        System.out.println(profile);
+        log.info("Created profile for user {}", user.getUserId());
         return "redirect:/userProfile";
     }
 

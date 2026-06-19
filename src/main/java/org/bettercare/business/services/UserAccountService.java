@@ -10,10 +10,13 @@ import java.util.List;
 public class UserAccountService {
 
     private final IUserAccountRepository repo;
+    private final PasswordService passwordService;
 
 
-    public UserAccountService(IUserAccountRepository repo) {
+    public UserAccountService(IUserAccountRepository repo,
+                              PasswordService passwordService) {
         this.repo = repo;
+        this.passwordService = passwordService;
     }
 
     public UserAccount findById(int id) {
@@ -46,9 +49,18 @@ public class UserAccountService {
         return repo.findById(id);
     }
 
-    public void insertUserAccount(UserAccount userAccount){repo.insertUserAccount(userAccount);}
+    public void insertUserAccount(UserAccount userAccount){
+        userAccount.setPassword(passwordService.hash(userAccount.getPassword()));
+        repo.insertUserAccount(userAccount);
+    }
 
-    public UserAccount loginVerification(String name, String password){return repo.loginVerification(name, password);}
+    public UserAccount loginVerification(String name, String password){
+        UserAccount account = repo.findByName(name);
+        if (account == null || !passwordService.matches(password, account.getPassword())) {
+            return null;
+        }
+        return account;
+    }
 
     public List<UserAccount> getUsersWithEmailAlertsEnabled() {
         return repo.findAllWithEmailAlertsEnabled();

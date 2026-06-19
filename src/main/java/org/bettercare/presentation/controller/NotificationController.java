@@ -5,12 +5,15 @@ import org.bettercare.business.entities.UserAccount;
 import org.bettercare.business.entities.enums.NOTIFICATION_LEVEL;
 import org.bettercare.business.services.EmailService;
 import org.bettercare.business.services.NotificationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class NotificationController {
+    private static final Logger log = LoggerFactory.getLogger(NotificationController.class);
 
     private final NotificationService notificationService;
     private final EmailService emailService;
@@ -80,7 +83,7 @@ public class NotificationController {
 
         // Do not send if user disabled email alerts
         if (!user.isReceiveEmailAlerts()) {
-            System.out.println("User " + user + " has disabled email alerts.");
+            log.info("User {} has disabled email alerts", user.getUserId());
             return "redirect:/notifications";
         }
 
@@ -91,7 +94,7 @@ public class NotificationController {
                 NOTIFICATION_LEVEL.INFO
         );
 
-        System.out.println("Notification + email sent to: " + user.getEmail());
+        log.info("Notification created for {}", user.getEmail());
         return "redirect:/notifications";
     }
 }

@@ -3,6 +3,8 @@ package org.bettercare.business.services;
 import org.bettercare.business.entities.Observation;
 import org.bettercare.business.entities.UserAccount;
 import org.bettercare.business.entities.enums.NOTIFICATION_LEVEL;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,7 @@ import java.util.List;
 
 @Service
 public class WeatherAlertService {
+    private static final Logger log = LoggerFactory.getLogger(WeatherAlertService.class);
 
     private final NotificationService notificationService;
     private final EmailService emailService;
@@ -33,11 +36,11 @@ public class WeatherAlertService {
     // Scheduled task that runs every 5 minutes.
     // @Scheduled(fixedRate = 300000)
     public void autoCheckSensors() {
-        System.out.println("Running scheduled weather alert check...");
+        log.info("Running scheduled weather alert check");
 
         List<Observation> observations = sensorReadingService.getObservations();
         if (observations == null || observations.isEmpty()) {
-            System.out.println("No sensor data found. Skipping.");
+            log.info("No sensor data found. Skipping.");
             return;
         }
 
