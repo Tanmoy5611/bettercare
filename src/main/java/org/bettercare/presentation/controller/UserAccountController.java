@@ -1,10 +1,10 @@
 package org.bettercare.presentation.controller;
 
 import jakarta.servlet.http.HttpSession;
-import org.bettercare.business.entities.UserAccount;
-import org.bettercare.business.entities.UserProfile;
-import org.bettercare.business.services.UserAccountService;
-import org.bettercare.business.services.UserProfileService;
+import org.bettercare.domain.model.UserAccount;
+import org.bettercare.domain.model.UserProfile;
+import org.bettercare.business.service.UserAccountService;
+import org.bettercare.business.service.UserProfileService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

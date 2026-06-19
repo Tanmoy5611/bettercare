@@ -1,12 +1,14 @@
 package org.bettercare.presentation.controller;
 
+// This controller handles creating and showing a user profile
+
 import jakarta.servlet.http.HttpSession;
-import org.bettercare.business.entities.UserAccount;
-import org.bettercare.business.entities.UserProfile;
-import org.bettercare.business.entities.enums.SKIN_COLOR;
-import org.bettercare.business.services.UserAccountService;
-import org.bettercare.business.services.UserProfileService;
-import org.bettercare.business.services.intelligence.SunExAi;
+import org.bettercare.domain.model.UserAccount;
+import org.bettercare.domain.model.UserProfile;
+import org.bettercare.domain.model.enums.SkinColor;
+import org.bettercare.business.service.UserAccountService;
+import org.bettercare.business.service.UserProfileService;
+import org.bettercare.business.intelligence.SunExAi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -48,7 +50,7 @@ public class UserProfileController {
         model.addAttribute("profiles", profiles);
         model.addAttribute("account", user);
         model.addAttribute("profile", new UserProfile());
-        model.addAttribute("skinColors", SKIN_COLOR.values());
+        model.addAttribute("skinColors", SkinColor.values());
         return "userProfile";
     }
 
@@ -70,7 +72,7 @@ public class UserProfileController {
         UserProfile profile = profileService.findById(id);
         model.addAttribute("profile", profile);
         model.addAttribute("accounts", accountService.findAll());
-        model.addAttribute("skinColors", SKIN_COLOR.values());
+        model.addAttribute("skinColors", SkinColor.values());
         return "userProfile-edit";
     }
 

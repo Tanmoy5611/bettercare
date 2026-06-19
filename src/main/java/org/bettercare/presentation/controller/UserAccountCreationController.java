@@ -2,10 +2,12 @@ package org.bettercare.presentation.controller;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import org.bettercare.business.services.UserAccountService;
-import org.bettercare.business.viewmodel.CreationViewModel;
-import org.bettercare.business.viewmodel.LoginViewModel;
-import org.bettercare.business.entities.UserAccount;
+import org.bettercare.business.service.UserAccountService;
+import org.bettercare.business.service.NotificationService;
+import org.bettercare.presentation.viewmodel.CreationViewModel;
+import org.bettercare.presentation.viewmodel.LoginViewModel;
+import org.bettercare.domain.model.UserAccount;
+import org.bettercare.domain.model.enums.NotificationLevel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,14 +16,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 
 @Controller
 public class UserAccountCreationController {
     private final UserAccountService userAccountService;
+    private final NotificationService notificationService;
     private final Logger log = LoggerFactory.getLogger(UserAccountCreationController.class);
 
-    public UserAccountCreationController(UserAccountService userAccountService) {
+    public UserAccountCreationController(UserAccountService userAccountService,
+                                         NotificationService notificationService) {
         this.userAccountService = userAccountService;
+        this.notificationService = notificationService;
     }
 
     // Show empty form
@@ -51,21 +57,37 @@ public class UserAccountCreationController {
 
             return "userAccountCreation";
         }
+        if (userAccountService.findByName(creationVM.getName()) != null) {
+            result.rejectValue("name", "name.taken", "That username is already in use.");
+            return "userAccountCreation";
+        }
+
         UserAccount account = new UserAccount();
         account.setName(creationVM.getName());
         account.setEmail(creationVM.getEmail());
         account.setPassword(creationVM.getPassword());
-        userAccountService.insertUserAccount(account);
-        account = userAccountService.findByName(creationVM.getName());
-        model.addAttribute("account", account);
-        session.setAttribute("user", account);
-        return "home";
+        try {
+            userAccountService.insertUserAccount(account);
+            account = userAccountService.findByName(creationVM.getName());
+            session.setAttribute("user", account);
+            notificationService.createNotification(
+                    account,
+                    "Welcome to BetterCare. Your account is ready to use.",
+                    NotificationLevel.INFO
+            );
+            return "redirect:/";
+        } catch (DataIntegrityViolationException exception) {
+            log.warn("Account creation failed because username '{}' was already registered", creationVM.getName());
+            result.rejectValue("name", "name.taken", "That username is already in use.");
+            return "userAccountCreation";
+        }
     }
 
 
     @PostMapping("/userAccounts/login")
     public String handleUserLogin(Model model, @Valid @ModelAttribute("loginVM") LoginViewModel loginViewModel
             , BindingResult result,HttpSession session) {
+        // The service checks the password so the controller only handles the page flow
         model.addAttribute("submitted", true);
         if (result.hasErrors()) {
             result.getAllErrors()

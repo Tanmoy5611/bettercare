@@ -1,10 +1,12 @@
 package org.bettercare.presentation.controller;
 
+// This controller shows notifications and sends a test email alert
+
 import jakarta.servlet.http.HttpSession;
-import org.bettercare.business.entities.UserAccount;
-import org.bettercare.business.entities.enums.NOTIFICATION_LEVEL;
-import org.bettercare.business.services.EmailService;
-import org.bettercare.business.services.NotificationService;
+import org.bettercare.domain.model.UserAccount;
+import org.bettercare.domain.model.enums.NotificationLevel;
+import org.bettercare.business.service.EmailService;
+import org.bettercare.business.service.NotificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -69,7 +71,7 @@ public class NotificationController {
         emailService.sendAlertEmail(
                 "tanmoydas7349@gmail.com",
                 "Test alert from BetterCare",
-                NOTIFICATION_LEVEL.INFO
+                NotificationLevel.INFO
         );
         return "redirect:/notifications";
     }
@@ -91,7 +93,7 @@ public class NotificationController {
         notificationService.createNotification(
                 user,
                 "Test alert from BetterCare",
-                NOTIFICATION_LEVEL.INFO
+                NotificationLevel.INFO
         );
 
         log.info("Notification created for {}", user.getEmail());

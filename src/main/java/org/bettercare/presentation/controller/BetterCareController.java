@@ -1,13 +1,13 @@
 package org.bettercare.presentation.controller;
 
 import jakarta.servlet.http.HttpSession;
-import org.bettercare.business.entities.*;
-import org.bettercare.business.services.AdviceService;
-import org.bettercare.business.services.PollutionService;
-import org.bettercare.business.services.SensorReadingService;
-import org.bettercare.business.services.TrafficReadingService;
-import org.bettercare.business.services.intelligence.FutureAirQualityAi;
-import org.bettercare.business.services.NotificationService;
+import org.bettercare.domain.model.*;
+import org.bettercare.business.service.AdviceService;
+import org.bettercare.business.service.PollutionService;
+import org.bettercare.business.service.SensorReadingService;
+import org.bettercare.business.service.TrafficReadingService;
+import org.bettercare.business.intelligence.FutureAirQualityAi;
+import org.bettercare.business.service.NotificationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -113,6 +113,7 @@ public class BetterCareController {
 
         // Generate advice for home
         if (!observations.isEmpty()) {
+            // Reuse the same advice service as the advice page
             Advice advice = adviceService.generateAdvice();
 
             model.addAttribute("advice", advice);
@@ -125,7 +126,7 @@ public class BetterCareController {
     }
 
     private String calculateHighestDangerLevel(int pollution, int uv) {
+        // This helper lets the home page use the shared danger calculation
         return adviceService.calculateHighestDangerLevel(pollution, uv);
     }
-
 }

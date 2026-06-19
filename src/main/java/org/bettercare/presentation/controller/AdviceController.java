@@ -1,11 +1,11 @@
 package org.bettercare.presentation.controller;
 
 import jakarta.servlet.http.HttpSession;
-import org.bettercare.business.entities.Advice;
-import org.bettercare.business.entities.UserAccount;
-import org.bettercare.business.services.AdviceService;
-import org.bettercare.business.services.PollutionService;
-import org.bettercare.business.services.SensorReadingService;
+import org.bettercare.domain.model.Advice;
+import org.bettercare.domain.model.UserAccount;
+import org.bettercare.business.service.AdviceService;
+import org.bettercare.business.service.PollutionService;
+import org.bettercare.business.service.SensorReadingService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +27,7 @@ public class AdviceController {
 
     @GetMapping("/advice")
     public String showAdvice(Model model, HttpSession session) {
+        // The service keeps the advice logic outside the controller
         UserAccount user = (UserAccount) session.getAttribute("user");
         Advice advice = adviceService.generateAdvice();
 

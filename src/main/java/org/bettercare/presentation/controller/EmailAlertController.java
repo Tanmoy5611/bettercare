@@ -1,8 +1,10 @@
 package org.bettercare.presentation.controller;
 
+// This controller saves the email alert setting from the form
+
 import jakarta.servlet.http.HttpSession;
-import org.bettercare.business.entities.UserAccount;
-import org.bettercare.business.services.UserSettingsService;
+import org.bettercare.domain.model.UserAccount;
+import org.bettercare.business.service.UserSettingsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
