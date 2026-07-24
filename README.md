@@ -2,8 +2,6 @@
 
 A Spring Boot–based environmental monitoring platform that processes sensor data (UV index, pollution, traffic), generates intelligent alerts, and provides a dashboard for users to monitor environmental conditions in real time.
 
-This project was developed as part of atSoftware Engineering course (Year-2/ Semester:1), focusing on layered architecture, clean design principles, and real-world backend structure.
-
 ---
 
 ## Tech Stack
@@ -189,5 +187,4 @@ Through this project, I practiced:
 
 ## Author
 
-**Tanmoy Das** [Applied Computer Science] 
-* **Karel de Grote University College**
+**Tanmoy Das**
